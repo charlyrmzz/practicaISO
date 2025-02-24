@@ -39,12 +39,14 @@
                         </div>
                         <ul class="dropdown__menu">
                             <li>
-                                <a href="#" class="dropdown__link">
+                                <!-- Enlace para gestionar usuarios -->
+                                <a href="{{ url_for('gestionar_usuarios') }}" class="dropdown__link">
                                     <i class="ri-pie-chart-line"></i> Gestionar Usuarios
                                 </a>                          
                             </li>
                             <li>
-                                <a href="#" class="dropdown__link">
+                                <!-- Enlace para gestionar grupos -->
+                                <a href="{{ url_for('gestionar_grupos') }}" class="dropdown__link">
                                     <i class="ri-arrow-up-down-line"></i> Gestionar Grupos
                                 </a>
                             </li>
@@ -54,12 +56,14 @@
                                 </div>
                                 <ul class="dropdown__submenu">
                                     <li>
-                                        <a href="#" class="dropdown__sublink">
+                                        <!-- Enlace al listado de usuarios -->
+                                        <a href="{{ url_for('usuarios') }}" class="dropdown__sublink">
                                             <i class="ri-file-list-line"></i> Listado de Usuarios
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#" class="dropdown__sublink">
+                                        <!-- Enlace al listado de grupos -->
+                                        <a href="{{ url_for('grupos') }}" class="dropdown__sublink">
                                             <i class="ri-cash-line"></i> Listado de Grupos
                                         </a>
                                     </li>
