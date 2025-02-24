@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Usuarios y Grupos</title>
+    <link rel="stylesheet" href="/static/assets/css/styles.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav container">
+            <div class="nav__data">
+                <a href="{{ url_for('index') }}" class="nav__logo">
+                    <i class="ri-group-line"></i> Gestión
+                </a>
+            </div>
+        </nav>
+    </header>
+    
+    <main class="container">
+        <h2>Gestión de Usuarios y Grupos</h2>
+        
+        <section class="form-container">
+            <h3>Usuarios</h3>
+            <form id="userForm" class="form">
+                <label for="username">Nombre de usuario:</label>
+                <input type="text" id="username" required>
+                <button type="button" onclick="addUser()">Crear Usuario</button>
+                <button type="button" onclick="deleteUser()">Eliminar Usuario</button>
+                <button type="button" onclick="showUsers()">Mostrar Usuarios</button>
+            </form>
+            <ul id="userList"></ul>
+        </section>
+        
+        <section class="form-container">
+            <h3>Grupos</h3>
+            <form id="groupForm" class="form">
+                <label for="groupname">Nombre del grupo:</label>
+                <input type="text" id="groupname" required>
+                <button type="button" onclick="addGroup()">Crear Grupo</button>
+                <button type="button" onclick="deleteGroup()">Eliminar Grupo</button>
+                <button type="button" onclick="showGroups()">Mostrar Grupos</button>
+            </form>
+            <ul id="groupList"></ul>
+        </section>
+        
+        <section class="form-container">
+            <h3>Mover Usuario a Grupo</h3>
+            <form id="moveForm" class="form">
+                <label for="userSelect">Usuario:</label>
+                <input type="text" id="userSelect" required>
+                
+                <label for="groupSelect">Grupo:</label>
+                <input type="text" id="groupSelect" required>
+                
+                <button type="button" onclick="moveUserToGroup()">Mover Usuario</button>
+            </form>
+        </section>
+    </main>
+    
+    <script>
+        let users = [];
+        let groups = [];
+        
+        function addUser() {
+            let user = document.getElementById('username').value;
+            if (user) {
+                users.push(user);
+                alert('Usuario ' + user + ' creado');
+            }
+        }
+        
+        function deleteUser() {
+            let user = document.getElementById('username').value;
+            users = users.filter(u => u !== user);
+            alert('Usuario ' + user + ' eliminado');
+        }
+        
+        function addGroup() {
+            let group = document.getElementById('groupname').value;
+            if (group) {
+                groups.push(group);
+                alert('Grupo ' + group + ' creado');
+            }
+        }
+        
+        function deleteGroup() {
+            let group = document.getElementById('groupname').value;
+            groups = groups.filter(g => g !== group);
+            alert('Grupo ' + group + ' eliminado');
+        }
+        
+        function moveUserToGroup() {
+            let user = document.getElementById('userSelect').value;
+            let group = document.getElementById('groupSelect').value;
+            alert('Usuario ' + user + ' movido al grupo ' + group);
+        }
+        
+        function showUsers() {
+            let userList = document.getElementById('userList');
+            userList.innerHTML = users.map(user => `<li>${user}</li>`).join('');
+        }
+        
+        function showGroups() {
+            let groupList = document.getElementById('groupList');
+            groupList.innerHTML = groups.map(group => `<li>${group}</li>`).join('');
+        }
+    </script>
+</body>
+</html>

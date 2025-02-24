@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Grupos</title>
+    <link rel="stylesheet" href="/static/assets/css/styles.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav container">
+            <div class="nav__data">
+                <a href="{{ url_for('index') }}" class="nav__logo">
+                    <i class="ri-group-line"></i> Gestión
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h2>Lista de Grupos</h2>
+        <ul id="groupList"></ul>
+        <button onclick="window.location.href='index.html'">Volver</button>
+    </main>
+
+    <script>
+        let groups = JSON.parse(localStorage.getItem('groups')) || [];
+        let groupList = document.getElementById('groupList');
+        groupList.innerHTML = groups.map(group => `<li>${group}</li>`).join('');
+    </script>
+</body>
+</html>

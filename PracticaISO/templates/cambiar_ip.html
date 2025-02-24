@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--=============== REMIXICONS ===============-->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet">
+
+    <!--=============== CSS ===============-->
+    <link rel="stylesheet" href="/static/assets/css/styles.css">
+
+    <title>Cambiar Dirección IP</title>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav container">
+            <div class="nav__data">
+                <a href="{{ url_for( 'index' )}}" class="nav__logo">
+                    <i class="ri-planet-line"></i> Carlos
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h2>Cambiar Dirección IP</h2>
+        <form action="#" method="POST" class="form">
+            <label for="ip">Nueva Dirección IP:</label>
+            <input type="text" id="ip" name="ip" required>
+
+            <label for="mascara">Máscara de Subred:</label>
+            <input type="text" id="mascara" name="mascara" required>
+
+            <label for="puerta">Puerta de Enlace:</label>
+            <input type="text" id="puerta" name="puerta" required>
+
+            <label for="dns">DNS Primario:</label>
+            <input type="text" id="dns" name="dns" required>
+
+            <button type="submit">Cambiar IP</button> 
+        </form>
+    </main>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>
