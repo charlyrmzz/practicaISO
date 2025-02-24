@@ -79,16 +79,14 @@ def ssh_connection_thread(client_id, server_ip, username, password):
                 if output:
                     socketio.emit('output', {'client_id': client_id, 'output': output.decode()})
 
-                # Verificar si el canal está cerrado o no se recibe más salida
-                if channel.exit_status_ready():
-                    break
-
-        # Ejecutar la función de manejar el canal en un hilo separado
         threading.Thread(target=handle_channel, daemon=True).start()
+
+        # Enviar mensaje de confirmación de conexión exitosa
+        socketio.emit('connection_status', {'status': 'success', 'message': 'Conexión SSH establecida correctamente.', 'client_id': client_id})
 
     except Exception as e:
         print(f"Error en la conexión SSH: {e}")
-        socketio.emit('output', {'client_id': client_id, 'output': f"Error: {e}\n"})
+        socketio.emit('connection_status', {'status': 'error', 'message': f"Error: {e}", 'client_id': client_id})
 
 # Ruta para recibir los comandos desde el cliente
 @socketio.on('command')
@@ -139,6 +137,11 @@ def grupos():
 @app.route('/ssh')
 def ssh():
     return render_template('ssh.html')
+
+# Ruta de la terminal para interactuar con SSH
+@app.route('/terminal')
+def terminal():
+    return render_template('terminal.html')
 
 # Ejecutar la aplicación
 if __name__ == '__main__':

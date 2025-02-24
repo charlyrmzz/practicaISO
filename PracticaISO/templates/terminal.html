@@ -24,7 +24,9 @@
             white-space: pre-wrap;
             word-wrap: break-word;
             border-radius: 5px;
+            margin-bottom: 10px;
         }
+
         input[type="text"] {
             background-color: black;
             color: white;
@@ -32,7 +34,9 @@
             outline: none;
             font-family: monospace;
             width: 100%;
+            padding: 5px;
         }
+
         input[type="text"]:focus {
             border: none;
         }
@@ -52,8 +56,10 @@
     <main class="container">
         <h2>Terminal SSH</h2>
 
+        <!-- Aquí es donde se mostrará la salida del comando -->
         <div id="terminal"></div>
 
+        <!-- Campo para ingresar comandos -->
         <input type="text" id="command" placeholder="Escribe un comando..." autofocus />
     </main>
 

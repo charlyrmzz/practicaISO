@@ -56,8 +56,16 @@
             // Emitir evento para conectar al servidor SSH
             socket.emit('connect_ssh', { server_ip: serverIp, username, password });
 
-            // Redirigir al usuario a la página de la terminal después de establecer la conexión
-            window.location.href = "/terminal";
+            // Escuchar la respuesta de la conexión SSH
+            socket.on('connection_status', (data) => {
+                if (data.status === 'success') {
+                    // Si la conexión es exitosa, redirigir a la página de la terminal
+                    window.location.href = "/terminal";
+                } else {
+                    // Si ocurre un error en la conexión, mostrar un mensaje al usuario
+                    alert("Error al conectar al servidor SSH: " + data.message);
+                }
+            });
         });
     </script>
 </body>
