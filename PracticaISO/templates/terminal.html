@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--=============== REMIXICONS ===============-->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet">
+
+    <!--=============== CSS ===============-->
+    <link rel="stylesheet" href="/static/assets/css/styles.css">
+
+    <title>Terminal SSH</title>
+
+    <style>
+        /* Estilo para la terminal */
+        #terminal {
+            background-color: black;
+            color: white;
+            font-family: monospace;
+            height: 400px;
+            padding: 10px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            border-radius: 5px;
+        }
+        input[type="text"] {
+            background-color: black;
+            color: white;
+            border: none;
+            outline: none;
+            font-family: monospace;
+            width: 100%;
+        }
+        input[type="text"]:focus {
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav container">
+            <div class="nav__data">
+                <a href="{{ url_for('index') }}" class="nav__logo">
+                    <i class="ri-planet-line"></i> Carlos
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h2>Terminal SSH</h2>
+
+        <div id="terminal"></div>
+
+        <input type="text" id="command" placeholder="Escribe un comando..." autofocus />
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/socket.io-client@4.0.1/dist/socket.io.min.js"></script>
+    <script>
+        const socket = io();  // Conectar a Socket.IO
+        const terminal = document.getElementById('terminal');
+        const commandInput = document.getElementById('command');
+
+        // Obtener el ID de sesión
+        const clientId = "{{ request.sid }}";  // Usar el client_id que se pasa desde Flask
+
+        // Escuchar la salida de la terminal desde el servidor
+        socket.on('output', (data) => {
+            if (data.client_id === clientId) {
+                terminal.innerText += data.output;  // Mostrar la salida del comando en la terminal
+                terminal.scrollTop = terminal.scrollHeight;  // Desplazar hacia abajo
+            }
+        });
+
+        // Enviar el comando al servidor cuando el usuario presiona Enter
+        commandInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const command = commandInput.value.trim();
+                if (command) {
+                    // Enviar el comando al servidor
+                    socket.emit('command', { client_id: clientId, command: command });
+
+                    // Mostrar el comando en la terminal
+                    terminal.innerText += `> ${command}\n`;
+                    terminal.scrollTop = terminal.scrollHeight;
+
+                    // Limpiar el campo de entrada
+                    commandInput.value = '';
+                }
+            }
+        });
+    </script>
+</body>
+</html>

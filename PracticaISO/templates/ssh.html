@@ -16,7 +16,7 @@
     <header class="header">
         <nav class="nav container">
             <div class="nav__data">
-                <a href="{{ url_for( 'index' )}}" class="nav__logo">
+                <a href="{{ url_for('index') }}" class="nav__logo">
                     <i class="ri-planet-line"></i> Carlos
                 </a>
             </div>
@@ -25,7 +25,7 @@
 
     <main class="container">
         <h2>Conectar a Servidor SSH</h2>
-        <form action="#" method="POST" class="form">
+        <form id="ssh-form" class="form">
             <label for="server_ip">Dirección IP del Servidor:</label>
             <input type="text" id="server_ip" name="server_ip" required>
 
@@ -39,6 +39,26 @@
         </form>
     </main>
 
-    <script src="../assets/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/socket.io-client@4.0.1/dist/socket.io.min.js"></script>
+    <script>
+        const socket = io(); // Conectar a Socket.IO
+
+        // Obtener elementos del formulario
+        const form = document.getElementById('ssh-form');
+
+        // Al enviar el formulario de conexión SSH
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const serverIp = document.getElementById('server_ip').value;
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Emitir evento para conectar al servidor SSH
+            socket.emit('connect_ssh', { server_ip: serverIp, username, password });
+
+            // Redirigir al usuario a la página de la terminal después de establecer la conexión
+            window.location.href = "/terminal";
+        });
+    </script>
 </body>
 </html>
